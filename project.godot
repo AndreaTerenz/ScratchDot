@@ -20,9 +20,13 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=720
 window/size/viewport_height=1366
-window/size/mode=4
-window/size/resizable=false
+window/size/window_width_override=1366
+window/size/window_height_override=720
+window/energy_saving/keep_screen_on=false
 window/handheld/orientation=1
+window/ios/hide_home_indicator=false
+window/ios/hide_status_bar=false
+window/ios/suppress_ui_gesture=false
 
 [rendering]
 
