@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dk3ts0mtn21md"]
+[gd_scene load_steps=12 format=3 uid="uid://dk3ts0mtn21md"]
 
 [ext_resource type="Texture2D" uid="uid://da604p83oklg8" path="res://Icons/clipboard.svg" id="1_i6mvk"]
 [ext_resource type="Texture2D" uid="uid://dpswcmq8a6jhx" path="res://Icons/scissors.svg" id="2_hjrji"]
@@ -22,6 +22,26 @@ corner_radius_bottom_left = 4
 default_font = SubResource("SystemFont_30514")
 default_font_size = 30
 Button/styles/normal = SubResource("StyleBoxFlat_pusoo")
+
+[sub_resource type="GDScript" id="GDScript_85r47"]
+script/source = "extends Control
+
+@onready var text_edit := %TextEdit
+@onready var copy_btn := %CopyBtn
+@onready var cut_btn := %CutBtn
+@onready var clear_btn := %ClearBtn
+@onready var share_btn := %ShareBtn
+
+func _on_clear_btn_pressed():
+	text_edit.text = \"\"
+
+func _on_copy_btn_pressed():
+	DisplayServer.clipboard_set(text_edit.text)
+
+func _on_cut_btn_pressed():
+	DisplayServer.clipboard_set(text_edit.text)
+	text_edit.text = \"\"
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5whc7"]
 content_margin_top = 119.0
@@ -53,6 +73,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_s6fqa")
+script = SubResource("GDScript_85r47")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -73,6 +94,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_5whc7")
 
 [node name="TextEdit" type="TextEdit" parent="PanelContainer/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_enjri")
@@ -86,25 +108,33 @@ custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="CopyBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("1_i6mvk")
 icon_alignment = 1
 
 [node name="CutBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("2_hjrji")
 icon_alignment = 1
 
 [node name="ClearBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("3_6t177")
 icon_alignment = 1
 
 [node name="ShareBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("4_050kn")
 icon_alignment = 1
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer/CopyBtn" to="." method="_on_copy_btn_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer/CutBtn" to="." method="_on_cut_btn_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer/ClearBtn" to="." method="_on_clear_btn_pressed"]
