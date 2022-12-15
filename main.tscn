@@ -1,11 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://dk3ts0mtn21md"]
+[gd_scene load_steps=13 format=3 uid="uid://dk3ts0mtn21md"]
 
 [ext_resource type="Texture2D" uid="uid://da604p83oklg8" path="res://Icons/clipboard.svg" id="1_i6mvk"]
+[ext_resource type="FontFile" uid="uid://bblyr5013spa7" path="res://Fonts/Roboto-Regular.ttf" id="1_ilr8s"]
 [ext_resource type="Texture2D" uid="uid://dpswcmq8a6jhx" path="res://Icons/scissors.svg" id="2_hjrji"]
-[ext_resource type="Texture2D" uid="uid://bbe1kdvi5p0q8" path="res://Icons/trash-fill.svg" id="3_6t177"]
+[ext_resource type="Texture2D" uid="uid://dc2susx1dj4f5" path="res://Icons/trash3.svg" id="4_31k0n"]
 [ext_resource type="Texture2D" uid="uid://2drsf4x5yrli" path="res://Icons/share.svg" id="4_050kn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pusoo"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -16,11 +21,9 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="SystemFont" id="SystemFont_30514"]
-
 [sub_resource type="Theme" id="Theme_s6fqa"]
-default_font = SubResource("SystemFont_30514")
-default_font_size = 30
+default_font = ExtResource("1_ilr8s")
+default_font_size = 40
 Button/styles/normal = SubResource("StyleBoxFlat_pusoo")
 
 [sub_resource type="GDScript" id="GDScript_85r47"]
@@ -44,7 +47,6 @@ func _on_cut_btn_pressed():
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5whc7"]
-content_margin_top = 119.0
 bg_color = Color(0.8, 0.8, 0.8, 1)
 border_width_left = 10
 border_width_top = 10
@@ -52,18 +54,31 @@ border_width_right = 10
 border_width_bottom = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enjri"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
 bg_color = Color(0.180392, 0.180392, 0.180392, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23ouq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jywe7"]
 bg_color = Color(0.8, 0.8, 0.8, 1)
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
+
+[sub_resource type="GDScript" id="GDScript_djiem"]
+script/source = "extends Control
+
+var old_height := 0.
+
+func _ready():
+	old_height = DisplayServer.virtual_keyboard_get_height()
+	
+func _process(delta):
+	var kb_height = DisplayServer.virtual_keyboard_get_height()
+	custom_minimum_size.y = abs(old_height - kb_height)
+"
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -82,29 +97,38 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5whc7")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 15
 alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "===ScratchDot==="
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_5whc7")
 
 [node name="TextEdit" type="TextEdit" parent="PanelContainer/VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_enjri")
+placeholder_text = "Type here..."
+context_menu_enabled = false
 
 [node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_23ouq")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jywe7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2"]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="CopyBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
@@ -113,6 +137,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("1_i6mvk")
 icon_alignment = 1
+expand_icon = true
 
 [node name="CutBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 unique_name_in_owner = true
@@ -120,13 +145,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("2_hjrji")
 icon_alignment = 1
+expand_icon = true
 
 [node name="ClearBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-icon = ExtResource("3_6t177")
+icon = ExtResource("4_31k0n")
 icon_alignment = 1
+expand_icon = true
 
 [node name="ShareBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 unique_name_in_owner = true
@@ -134,6 +161,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 icon = ExtResource("4_050kn")
 icon_alignment = 1
+expand_icon = true
+
+[node name="Keyboard" type="Control" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+script = SubResource("GDScript_djiem")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer/CopyBtn" to="." method="_on_copy_btn_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer/CutBtn" to="." method="_on_cut_btn_pressed"]
