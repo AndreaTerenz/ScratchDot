@@ -1,10 +1,40 @@
-[gd_scene load_steps=13 format=3 uid="uid://dk3ts0mtn21md"]
+[gd_scene load_steps=16 format=3 uid="uid://dk3ts0mtn21md"]
 
 [ext_resource type="Texture2D" uid="uid://da604p83oklg8" path="res://Icons/clipboard.svg" id="1_i6mvk"]
 [ext_resource type="FontFile" uid="uid://bblyr5013spa7" path="res://Fonts/Roboto-Regular.ttf" id="1_ilr8s"]
 [ext_resource type="Texture2D" uid="uid://dpswcmq8a6jhx" path="res://Icons/scissors.svg" id="2_hjrji"]
 [ext_resource type="Texture2D" uid="uid://dc2susx1dj4f5" path="res://Icons/trash3.svg" id="4_31k0n"]
 [ext_resource type="Texture2D" uid="uid://2drsf4x5yrli" path="res://Icons/share.svg" id="4_050kn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btd7u"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.294118, 0.294118, 0.294118, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c5m6d"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pusoo"]
 content_margin_left = 18.0
@@ -21,10 +51,29 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7o1vn"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="Theme" id="Theme_s6fqa"]
 default_font = ExtResource("1_ilr8s")
 default_font_size = 40
+Button/styles/focus = SubResource("StyleBoxFlat_btd7u")
+Button/styles/hover = SubResource("StyleBoxFlat_c5m6d")
 Button/styles/normal = SubResource("StyleBoxFlat_pusoo")
+Button/styles/pressed = SubResource("StyleBoxFlat_7o1vn")
 
 [sub_resource type="GDScript" id="GDScript_85r47"]
 script/source = "extends Control
@@ -65,6 +114,8 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jywe7"]
+content_margin_left = 40.0
+content_margin_right = 40.0
 bg_color = Color(0.8, 0.8, 0.8, 1)
 
 [sub_resource type="GDScript" id="GDScript_djiem"]
@@ -135,6 +186,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 icon = ExtResource("1_i6mvk")
 icon_alignment = 1
 expand_icon = true
@@ -143,6 +195,7 @@ expand_icon = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 icon = ExtResource("2_hjrji")
 icon_alignment = 1
 expand_icon = true
@@ -151,14 +204,17 @@ expand_icon = true
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 icon = ExtResource("4_31k0n")
 icon_alignment = 1
 expand_icon = true
 
 [node name="ShareBtn" type="Button" parent="PanelContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 icon = ExtResource("4_050kn")
 icon_alignment = 1
 expand_icon = true
